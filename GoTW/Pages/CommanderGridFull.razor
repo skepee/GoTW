@@ -1,0 +1,52 @@
+﻿<BSMedia MediaType="MediaType.Media">
+    <BSMedia MediaType="MediaType.Image" src="@CommanderType.Ico" alt="@CommanderType.Name" />
+    <BSMedia MediaType="MediaType.Body">
+        @CommanderType.Name
+    </BSMedia>
+</BSMedia>
+
+<br/>
+<table class="table">
+    <thead>
+        <tr>
+            <td></td>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Class</th>
+            <th>Fighting</th>
+            <th>Expeditions</th>
+            <th>Training Ground</th>
+            <th>Strategic Skills</th>
+            <th>Weirwood</th>
+            <th>Awakening</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Commanders != null)
+        {
+            foreach (CommanderSkillDTO comm in Commanders)
+            {
+        <tr>
+            <td><img class="img-fluid img-thumbnail" src="@comm.Image" alt=@comm.Name /></td>
+            <td>@comm.Name</td>
+            <td>@comm.Type</td>
+            <td>@comm.ClassType</td>
+            <td>@((comm.Skills.Where(x=>x.Name=="Fighting").Any()) ? comm.Skills.FirstOrDefault(x=>x.Name=="Fighting").Value : String.Empty)</td>
+            <td>@((comm.Skills.Where(x=>x.Name== "Expedition").Any()) ? comm.Skills.FirstOrDefault(x=>x.Name== "Expedition").Value : String.Empty )</td>
+            <td>@((comm.Skills.Where(x=>x.Name== "TrainingGround").Any()) ? comm.Skills.FirstOrDefault(x=>x.Name== "TrainingGround").Value: String.Empty)</td>
+            <td>@((comm.Skills.Where(x=>x.Name== "StrategicSkill").Any()) ? comm.Skills.FirstOrDefault(x=>x.Name== "StrategicSkill").Value: String.Empty )</td>
+            <td>@((comm.Skills.Where(x=>x.Name== "Weirwood").Any()) ? comm.Skills.FirstOrDefault(x=>x.Name== "Weirwood").Value: String.Empty )</td>
+            <td>@((comm.Skills.Where(x=>x.Name== "Awakening").Any()) ? comm.Skills.FirstOrDefault(x=>x.Name== "Awakening").Value: String.Empty )</td>
+        </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public TypeDTO CommanderType { get; set; }
+
+    [Parameter]
+    public IEnumerable<CommanderSkillDTO> Commanders { get; set; }
+}

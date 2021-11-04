@@ -1,0 +1,78 @@
+﻿@page  "/CommanderIconGrid"
+
+<style>
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 10px;
+        column-gap: 20px;
+    }
+
+    .image {
+        height: 252px;
+        width: 220px;
+    }
+
+    .icon {
+        height: 32;
+        width: 25;
+    }
+
+</style>
+
+@if (Commanders == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="accordion">
+        <BSCollapseGroup>
+            <BSCollapseItem @key="@CommanderType.Name">
+                <BSCard CardType="CardType.Card">
+                    <BSCard CardType="CardType.Header">
+                        <BSCollapseToggle IsLink="true">
+                            <BSMedia MediaType="MediaType.Media">
+                                <BSMedia MediaType="MediaType.Image" src="@CommanderType.Ico" Class="icon" alt="@CommanderType.Name" />
+                                <BSMedia MediaType="MediaType.Body">
+                                    @CommanderType.Name
+                                </BSMedia>
+                            </BSMedia>
+                        </BSCollapseToggle>
+                    </BSCard>
+                    <BSCollapse>
+                        <BSCard CardType="CardType.Body">
+                            <BSCard CardType="CardType.Text">
+                                <div class="container">
+                                    @if (Commanders != null)
+                                    {
+                                        foreach (var item in Commanders)
+                                        {
+                                            <BSCard>
+                                                <BSCard CardType="CardType.Body">
+                                                    <BSCard CardType="CardType.Title">@item.Name</BSCard>
+                                                    <BSCard CardType="CardType.Subtitle">@item.ClassType</BSCard>
+                                                    <BSCard CardType="CardType.Text">@item.Skill.Value</BSCard>
+                                                </BSCard>
+                                                <BSCard CardType="CardType.Image" src="@item.Image" Class="image" alt="@item.Name" />
+                                            </BSCard>
+                                        }
+                                    }
+                                </div>
+                            </BSCard>
+                        </BSCard>
+                    </BSCollapse>
+                </BSCard>
+            </BSCollapseItem>
+        </BSCollapseGroup>
+        </div>
+        }
+
+
+        @code {
+            [Parameter]
+            public IEnumerable<CommanderIconDTO> Commanders { get; set; }
+
+            [Parameter]
+            public TypeDTO CommanderType { get; set; }
+        }

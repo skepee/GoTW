@@ -1,0 +1,36 @@
+﻿@page "/commandersSkill/{Skill}"
+@inject GoTWHttp Http
+
+@if (AllCommanders == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    foreach (var commtype in AllCommanders.CommanderTypes)
+    {
+        var cskills = AllCommanders.CommanderSkills.Where(x => x.Type.Equals(commtype.Name));
+        var comms = cskills.CommanderSkillDetail();
+
+        <CommanderIconGrid Commanders="@comms" CommanderType="@commtype"></CommanderIconGrid>
+    }
+}
+
+
+@code {
+    [Parameter]
+    public string Skill { get; set; }
+
+    private CommandersDTO AllCommanders;
+
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        AllCommanders = await Http.GetCommanderSkills(Skill);
+    }
+
+}
