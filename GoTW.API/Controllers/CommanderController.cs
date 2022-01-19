@@ -44,7 +44,7 @@ namespace GoTW.API.Controllers
             {
                 if (!string.IsNullOrEmpty(skill))
                 {
-                        res=res.Where(x => x.Skills.Contains(skill));
+                        res=res.Where(x => x.Skills.Contains(skill.ToLower()));
                 }
 
                 foreach (var item in res)
